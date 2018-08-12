@@ -1,0 +1,41 @@
+version: '3.0'
+services:
+  service:
+    build:
+      context: .
+      dockerfile: Dockerfile_service
+    command: '/app/docker/service/start-server.sh'
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    environment:
+      - REDIS_HOSTNAME=redis
+      - REDIS_DB_NUMBER=0
+      - REDIS_DB_PREFIX=local
+      - PYTHONUNBUFFERED=1
+    links:
+      - redis
+      - db
+
+  service_nginx:
+    build:
+      context: ./docker/service_nginx
+    command: '/start-nginx.sh'
+    ports:
+      - "8000:8000"
+    links:
+      - service
+
+  redis:
+    image: redis:3.2.4-alpine
+    ports:
+      - "6379:6379"
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: docker
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: kanban
