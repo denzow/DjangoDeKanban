@@ -27,6 +27,16 @@ services:
     links:
       - service
 
+  vuejs:
+    build:
+      context: .
+      dockerfile: Dockerfile_vuejs
+    command: '/app/docker/vuejs/start-watch.sh'
+    volumes:
+      - .:/app
+      - ./application/static/assets:/app/application/vuejs/dist
+      - node-modules-volume:/app/application/vuejs/node_modules
+
   redis:
     image: redis:3.2.4-alpine
     ports:
@@ -39,3 +49,6 @@ services:
       POSTGRES_USER: docker
       POSTGRES_PASSWORD: docker
       POSTGRES_DB: kanban
+
+volumes:
+  node-modules-volume:
