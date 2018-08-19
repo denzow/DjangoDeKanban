@@ -22,7 +22,7 @@ sys.path.append(APP_ROOT_PATH)
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'dy+qit02)bl*nf!lb=4jx58#j3z!&9r_#a$3@vll^cxj===&h_'
+SECRET_KEY = 'my_secret_key.'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -53,7 +53,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'application.views.urls'
 
 TEMPLATES = [
     {
@@ -131,6 +130,8 @@ STATIC_ROOT = os.path.join(APP_ROOT_PATH, 'static')
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = 'accounts/login/'
 
+# HTTPの起点を指定
+ROOT_URLCONF = 'application.views.urls'
 
 # ASGIの起点を指定
 ASGI_APPLICATION = 'views.routing.application'
