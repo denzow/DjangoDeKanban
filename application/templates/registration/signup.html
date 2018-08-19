@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}SIGNUP{% endblock %}
+
+{% block body %}
+
+  <div class="container py-5">
+    <div class="row">
+      <div class="col-md-12">
+        <h2 class="text-center text-white mb-4">SignUp Form</h2>
+        <div class="row">
+          <div class="col-md-6 mx-auto">
+
+            <!-- form card login -->
+            <div class="card rounded-0">
+              <div class="card-header">
+                <h3 class="mb-0">SignUp</h3>
+              </div>
+              <div class="card-body">
+
+                {% if form.errors %}
+                  <div class="alert alert-danger" role="alert">{{ form.errors }}</div>
+                {% endif %}
+
+                {% if next %}
+                    {% if user.is_authenticated %}
+                    <p>Your account doesn't have access to this page. To proceed,
+                    please login with an account that has access.</p>
+                    {% else %}
+                    <p>Please login to see this page.</p>
+                    {% endif %}
+                {% endif %}
+                <form class="form" role="form" autocomplete="off" id="formLogin" method="post" action="{% url 'signup' %}">
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <label for="uname1">Username</label>
+                    <input type="text" class="form-control form-control-lg rounded-0" name="username" id="username"
+                           required="">
+                    <div class="invalid-feedback">Oops, you missed this one.</div>
+                  </div>
+
+                 <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" class="form-control form-control-lg rounded-0" id="password1"
+                           name="password1"
+                           required=""
+                           autocomplete="new-password">
+                    <div class="invalid-feedback">Enter your password too!</div>
+                  </div>
+
+                 <div class="form-group">
+                    <label>Re Password</label>
+                    <input type="password" class="form-control form-control-lg rounded-0" id="password2"
+                           name="password2"
+                           required=""
+                           autocomplete="new-password">
+                    <div class="invalid-feedback">Enter your password too!</div>
+                  </div>
+                  <button type="submit" class="btn btn-info btn-lg float-right" id="btnLogin">SignUp</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -52,7 +52,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'application.urls'
+ROOT_URLCONF = 'application.views.urls'
 
 TEMPLATES = [
     {
@@ -125,6 +125,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(APP_ROOT_PATH, 'static')
+
+# login related
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = 'accounts/login/'
 
 
 # ASGIの起点を指定
