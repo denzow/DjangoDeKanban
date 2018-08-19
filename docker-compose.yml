@@ -34,7 +34,7 @@ services:
     command: '/app/docker/vuejs/start-watch.sh'
     volumes:
       - .:/app
-      - ./application/static/assets:/app/application/vuejs/dist
+      #- ./application/static/assets:/app/application/vuejs/dist
       - node-modules-volume:/app/application/vuejs/node_modules
 
   redis:
