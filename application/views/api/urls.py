@@ -1,6 +1,9 @@
-from django.urls import path, re_path, include
-from .board import BoardListApi
+from django.urls import path
+from django.contrib.auth.decorators import login_required
+from .board import BoardListApi, BoardApi
+
 
 urlpatterns = [
-    path('board', BoardListApi.as_view()),
+    path('board', login_required(BoardListApi.as_view())),
+    path('board/<int:board_id>/', login_required(BoardApi.as_view())),
 ]

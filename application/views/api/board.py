@@ -18,4 +18,14 @@ class BoardListApi(BaseApiView):
         })
 
 
+class BoardApi(BaseApiView):
+
+    def get(self, _, board_id):
+        board_data = kanban_sv.get_board_data_board_id(board_id)
+
+        return JsonResponse({
+            'board_data': board_data,
+        })
+
+
 
