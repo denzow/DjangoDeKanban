@@ -27,9 +27,9 @@
 </template>
 
 <script>
-  export default {
-    name: "MyHeader"
-  }
+export default {
+  name: 'MyHeader',
+};
 </script>
 
 <style scoped>

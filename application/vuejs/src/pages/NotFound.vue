@@ -7,5 +7,4 @@
   h1 {
     margin: 10rem 10rem;
   }
-
 </style>
