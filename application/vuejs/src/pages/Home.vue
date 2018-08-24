@@ -39,6 +39,7 @@ export default {
 <style lang="scss" scoped>
   .home {
     padding-top: 1rem;
+    align-items: center;
   }
   .board-card {
   }
@@ -47,8 +48,8 @@ export default {
     padding:0;
     .col,
     [class*="col-"] {
-      margin: 0.5rem 1rem;
-      padding:0;
+      margin: 0;
+      padding:0.5rem 1rem;
     }
   }
 

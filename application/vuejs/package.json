@@ -11,15 +11,17 @@
   "dependencies": {
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "vue-draggable": "^1.0.6",
+    "vue-native-websocket": "^2.0.8",
+    "axios": "^0.18.0",
+    "axios-progress-bar": "^1.2.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.1",
     "@vue/cli-plugin-eslint": "^3.0.1",
     "@vue/cli-service": "^3.0.1",
     "@vue/eslint-config-airbnb": "^3.0.1",
-    "axios": "^0.18.0",
-    "axios-progress-bar": "^1.2.0",
     "camelcase-keys": "^4.2.0",
     "node-sass": "^4.9.3",
     "sass-loader": "^7.1.0",
