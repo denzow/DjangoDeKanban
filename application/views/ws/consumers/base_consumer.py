@@ -23,6 +23,7 @@ class BaseJsonConsumer(AsyncJsonWebsocketConsumer):
         :param dict or list content:
         :param str mutation:
         :param str action:
+        :param str namespace:
         :return:
         """
         namespace = self.namespace if namespace is None else namespace

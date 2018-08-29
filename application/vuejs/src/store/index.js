@@ -2,6 +2,8 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import createLogger from 'vuex/dist/logger';
 import home from './pages/home';
+import board from './pages/board';
+
 
 Vue.use(Vuex);
 
@@ -12,6 +14,7 @@ export default new Vuex.Store({
     : [],
   modules: {
     home,
+    board,
   },
   state: {
     socket: null,
