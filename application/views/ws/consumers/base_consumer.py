@@ -6,13 +6,13 @@ class ConsumerException(Exception):
 
 
 class BaseJsonConsumer(AsyncJsonWebsocketConsumer):
+    namespace = None
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.consumer_id = id(self)
         self.user = None
         self.room_group_name = None
-        self.namespace = ''
         self.action_map = {}
 
     async def send_data(self, content, mutation=None, action=None, namespace=None):

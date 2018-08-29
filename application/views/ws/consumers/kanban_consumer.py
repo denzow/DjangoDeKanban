@@ -3,8 +3,10 @@ from .base_consumer import BaseJsonConsumer
 
 class KanbanConsumer(BaseJsonConsumer):
 
+    # VueNativeWebSocket経由でStoreにマップするための情報
+    namespace = 'kanban'
+
     async def connect(self):
-        self.namespace = 'kanban'
         if not self.scope['user'].is_authenticated:
             await self.close()
             return
