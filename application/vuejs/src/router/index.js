@@ -4,8 +4,8 @@ import WebSocketMiddleware from './middlewares/websocket';
 
 import DefaultLayout from '../components/layouts/DefaultLayout.vue';
 import NotFound from '../pages/NotFound.vue';
-import Home from '../pages/Home.vue';
-import Board from '../pages/Board.vue';
+import Home from '../pages/Home/Index.vue';
+import Board from '../pages/Board/Index.vue';
 
 Vue.use(Router);
 
