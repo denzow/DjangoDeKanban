@@ -9,14 +9,14 @@
     "build-watch": "vue-cli-service build --watch"
   },
   "dependencies": {
-    "vue": "^2.5.17",
-    "vue-router": "^3.0.1",
-    "vuex": "^3.0.1",
-    "vue-draggable": "^1.0.6",
-    "vue-native-websocket": "^2.0.8",
     "axios": "^0.18.0",
     "axios-progress-bar": "^1.2.0",
-    "camelcase-keys": "^4.2.0"
+    "camelcase-keys": "^4.2.0",
+    "vue": "^2.5.17",
+    "vue-native-websocket": "^2.0.8",
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1",
+    "vuedraggable": "^2.16.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.1",
