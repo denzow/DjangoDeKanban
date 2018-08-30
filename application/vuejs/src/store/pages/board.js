@@ -3,13 +3,18 @@ import camelcaseKeys from 'camelcase-keys';
 
 
 const state = {
-  kanbanData: {},
+  boardData: {
+    pipeLineList: [],
+  },
 };
 
 
 const getters = {
   getSocket(state, getters, rootState) {
     return rootState.socket;
+  },
+  getFilteredPipeLineList(state) {
+    return state.boardData.pipeLineList;
   },
 };
 
@@ -24,8 +29,8 @@ const actions = {
 };
 
 const mutations = {
-  setKanbanData(state, { kanbanData }) {
-    state.kanbanData = camelcaseKeys(kanbanData, { deep: true });
+  setBoardData(state, { boardData }) {
+    state.boardData = camelcaseKeys(boardData, { deep: true });
   },
 };
 

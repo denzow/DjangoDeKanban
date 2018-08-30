@@ -34,7 +34,7 @@ class KanbanConsumer(BaseJsonConsumer):
         ボードのデータを送る
         :return:
         """
-        kanban_data = await database_sync_to_async(kanban_sv.get_board_data_board_id)(self.board_id)
+        board_data = await database_sync_to_async(kanban_sv.get_board_data_board_id)(self.board_id)
         await self.send_data({
-            'kanbanData': kanban_data,
-        }, mutation='setKanbanData')
+            'boardData': board_data,
+        }, mutation='setBoardData')
