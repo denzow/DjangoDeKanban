@@ -55,9 +55,8 @@ def update_card_order(pipe_line_id, card_id_list):
     :return:
     """
     pipe_line = PipeLine.get_by_id(pipe_line_id)
-    card_list = Card.get_list_by_pipe_line(pipe_line=pipe_line)
-    card_id_map = {c.id: c for c in card_list}
     for i, card_id in enumerate(card_id_list):
-        card = card_id_map.get(card_id)
+        card = Card.get_by_id(card_id)
         card.order = i
+        card.pipe_line = pipe_line
         card.save()

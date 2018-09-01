@@ -14,5 +14,12 @@ class Card(models.Model):
         return '{}: {} of {}'.format(self.pk, self.title, self.pipe_line)
 
     @classmethod
+    def get_by_id(cls, card_id):
+        try:
+            return cls.objects.get(id=card_id)
+        except cls.DoesNotExist:
+            return None
+
+    @classmethod
     def get_list_by_pipe_line(cls, pipe_line):
         return list(cls.objects.filter(pipe_line=pipe_line).order_by('order'))
