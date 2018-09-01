@@ -26,11 +26,25 @@ const actions = {
       boardId,
     });
   },
+  updateCardOrder({ commit, getters }, { pipeLineId, cardList }) {
+    console.log(pipeLineId, cardList);
+    const socket = getters.getSocket;
+    socket.sendObj({
+      type: 'update_card_order',
+      pipeLineId,
+      cardIdList: cardList.map(x => x.cardId),
+    });
+    commit('updateCardOrder', { pipeLineId, cardList });
+  },
 };
 
 const mutations = {
   setBoardData(state, { boardData }) {
     state.boardData = camelcaseKeys(boardData, { deep: true });
+  },
+  updateCardOrder(state, { pipeLineId, cardList }) {
+    const targetPipeLine = state.boardData.pipeLineList.find(pipeLine => pipeLine.pipeLineId === pipeLineId);
+    targetPipeLine.cardList = cardList;
   },
 };
 

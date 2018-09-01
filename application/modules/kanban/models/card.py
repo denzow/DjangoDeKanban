@@ -15,4 +15,4 @@ class Card(models.Model):
 
     @classmethod
     def get_list_by_pipe_line(cls, pipe_line):
-        return list(cls.objects.filter(pipe_line=pipe_line).order_by('content'))
+        return list(cls.objects.filter(pipe_line=pipe_line).order_by('order'))

@@ -46,6 +46,8 @@ export default {
       'getFilteredPipeLineList',
     ]),
   },
+  methods: {
+  },
 };
 </script>
 

@@ -18,8 +18,12 @@
 </template>
 
 <script>
+
+import { createNamespacedHelpers } from 'vuex';
 import Draggable from 'vuedraggable';
 import Card from './Card.vue';
+
+const { mapActions } = createNamespacedHelpers('board');
 
 
 export default {
@@ -41,6 +45,10 @@ export default {
       },
       set(value) {
         console.log(value);
+        this.updateCardOrder({
+          pipeLineId: this.pipeLine.pipeLineId,
+          cardList: value,
+        });
       },
     },
     pipeLineName() {
@@ -54,6 +62,9 @@ export default {
     endDragging(e) {
       console.log('endDragging', e);
     },
+    ...mapActions([
+      'updateCardOrder',
+    ]),
   },
   data() {
     return {
