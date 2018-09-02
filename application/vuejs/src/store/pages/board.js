@@ -46,6 +46,15 @@ const actions = {
     });
     commit('updatePipeLineOrder', { pipeLineList });
   },
+  addPipeLine({ getters }, { boardId, pipeLineName }) {
+    console.log(boardId, pipeLineName);
+    const socket = getters.getSocket;
+    socket.sendObj({
+      type: 'add_pipe_line',
+      boardId,
+      pipeLineName,
+    });
+  },
 };
 
 const mutations = {

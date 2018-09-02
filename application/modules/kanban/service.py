@@ -69,3 +69,14 @@ def update_pipe_line_order(board_id, pipe_line_id_list):
         pipe_line = PipeLine.get_by_id(pipe_line_id)
         pipe_line.order = i
         pipe_line.save()
+
+
+def add_pipe_line(board_id, pipe_line_name):
+    board = Board.get_by_id(board_id)
+    current_count = PipeLine.get_current_pipe_line_count_by_board(board)
+    return PipeLine.create(
+        board=board,
+        name=pipe_line_name,
+        order=current_count + 1,
+    )
+

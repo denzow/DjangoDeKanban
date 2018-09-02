@@ -13,6 +13,10 @@ class PipeLine(models.Model):
         return '{}: {} of {}'.format(self.pk, self.name, self.board)
 
     @classmethod
+    def create(cls, **params):
+        return cls.objects.create(**params)
+
+    @classmethod
     def get_by_id(cls, pipe_line_id):
         try:
             return cls.objects.get(id=pipe_line_id)
@@ -22,3 +26,7 @@ class PipeLine(models.Model):
     @classmethod
     def get_list_by_board(cls, board):
         return list(cls.objects.filter(board=board).order_by('order'))
+
+    @classmethod
+    def get_current_pipe_line_count_by_board(cls, board):
+        return cls.objects.filter(board=board).count()

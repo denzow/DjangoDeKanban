@@ -9,6 +9,7 @@
         :pipeLine="pipeLine"
         :key="pipeLine.id"
       />
+      <AddPipeLine slot="footer"/>
     </Draggable>
   </div>
 </template>
@@ -18,12 +19,15 @@ import Draggable from 'vuedraggable';
 import { createNamespacedHelpers } from 'vuex';
 
 import PipeLine from './BoardArea/PipeLine.vue';
+import AddPipeLine from './BoardArea/AddPipeLine.vue';
+
 
 const { mapGetters, mapState, mapActions } = createNamespacedHelpers('board');
 
 export default {
   name: 'BoardArea',
   components: {
+    AddPipeLine,
     Draggable,
     PipeLine,
   },
