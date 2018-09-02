@@ -3,13 +3,15 @@
     <Draggable
       v-model="wrappedPipeLineList"
       class="board-container"
+      :options="options"
     >
       <PipeLine
         v-for="pipeLine in wrappedPipeLineList"
         :pipeLine="pipeLine"
+        class="pipe-line-item"
         :key="pipeLine.id"
       />
-      <AddPipeLine slot="footer"/>
+      <AddPipeLine />
     </Draggable>
   </div>
 </template>
@@ -55,6 +57,14 @@ export default {
     ...mapActions([
       'updatePipeLineOrder',
     ]),
+  },
+  data() {
+    return {
+      options: {
+        animation: 300,
+        draggable: '.pipe-line-item',
+      },
+    };
   },
 };
 </script>

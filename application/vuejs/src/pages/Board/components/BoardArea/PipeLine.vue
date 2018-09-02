@@ -2,19 +2,24 @@
   <div class="pipe-line">
     <nav class="navbar navbar-dark">
       <span class="navbar-brand mb-0 h1">{{ pipeLineName }}</span>
+      <span class="navbar-brand add-card" data-toggle="tooltip" data-placement="top"
+            title="Add Card" @click="addCardAction">
+        (+)
+      </span>
     </nav>
-    <draggable
+    <Draggable
       class="card-container"
       :options="options"
       v-model="wrappedCardList"
       @start="startDragging"
       @end="endDragging"
     >
-    <Card v-for="card in wrappedCardList"
-          :card="card"
-          :key="card.id"
-    />
-    </draggable>
+      <Card v-for="card in wrappedCardList"
+            class="item"
+            :card="card"
+            :key="card.id"
+      />
+    </Draggable>
   </div>
 </template>
 
@@ -63,15 +68,26 @@ export default {
     endDragging(e) {
       console.log('endDragging', e);
     },
+    addCardAction() {
+      const cardTitle = window.prompt('CardTitle?');
+      if (cardTitle) {
+        this.addCard({
+          pipeLineId: this.pipeLine.pipeLineId,
+          cardTitle,
+        });
+      }
+    },
     ...mapActions([
       'updateCardOrder',
+      'addCard',
     ]),
   },
   data() {
     return {
       options: {
-        group: 'kanban',
+        group: 'Cards',
         animation: 300,
+        draggable: '.item',
       },
     };
   },
@@ -88,5 +104,8 @@ export default {
   }
   .card-container {
     height: 100%;
+  }
+  .add-card {
+    cursor: pointer;
   }
 </style>

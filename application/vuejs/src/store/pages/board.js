@@ -55,6 +55,15 @@ const actions = {
       pipeLineName,
     });
   },
+  addCard({ getters }, { pipeLineId, cardTitle }) {
+    console.log(pipeLineId, cardTitle);
+    const socket = getters.getSocket;
+    socket.sendObj({
+      type: 'add_card',
+      pipeLineId,
+      cardTitle,
+    });
+  },
 };
 
 const mutations = {
