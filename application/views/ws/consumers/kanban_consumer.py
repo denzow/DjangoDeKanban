@@ -15,6 +15,7 @@ class KanbanConsumer(BaseJsonConsumer):
         self.board_id = None
         self.action_map = {
             'update_card_order': self.update_card_order,
+            'update_pipe_line_order': self.update_pipe_line_order,
         }
 
     async def connect(self):
@@ -51,17 +52,26 @@ class KanbanConsumer(BaseJsonConsumer):
         {
             'type': 'update_card_order',
             'pipeLineId': 1,
-            'cardIdList': [
-                {'cardId': 2, 'title': 'test2', 'content': 'test2'},
-                {'cardId': 1, 'title': 'test1', 'content': 'test1'}
-            ]
+            'cardIdList': [3, 1]
         }
         :return:
         """
         pipe_line_id = content['pipeLineId']
         card_id_list = content['cardIdList']
-
         await database_sync_to_async(kanban_sv.update_card_order)(pipe_line_id, card_id_list)
+        await self._broadcast_board_data_without_requester()
+
+    async def update_pipe_line_order(self, content):
+        """
+        {
+            'type': 'update_pipe_line_order',
+            'boardId': 1,
+            'pipeLineIdList': [2, 1]
+        }
+        """
+        board_id = content['boardId']
+        pipe_line_id_list = content['pipeLineIdList']
+        await database_sync_to_async(kanban_sv.update_pipe_line_order)(board_id, pipe_line_id_list)
         await self._broadcast_board_data_without_requester()
 
     async def _broadcast_board_data(self):

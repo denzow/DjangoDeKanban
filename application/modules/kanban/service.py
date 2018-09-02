@@ -28,6 +28,7 @@ def get_board_data_board_id(board_id):
     """
     board = Board.get_by_id(board_id)
     board_data = {
+        'board_id': board.id,
         'name': board.name,
         'pipe_line_list': []
     }
@@ -60,3 +61,11 @@ def update_card_order(pipe_line_id, card_id_list):
         card.order = i
         card.pipe_line = pipe_line
         card.save()
+
+
+def update_pipe_line_order(board_id, pipe_line_id_list):
+    board = Board.get_by_id(board_id)
+    for i, pipe_line_id in enumerate(pipe_line_id_list):
+        pipe_line = PipeLine.get_by_id(pipe_line_id)
+        pipe_line.order = i
+        pipe_line.save()

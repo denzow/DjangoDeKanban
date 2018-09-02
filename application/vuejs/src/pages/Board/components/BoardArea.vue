@@ -19,7 +19,7 @@ import { createNamespacedHelpers } from 'vuex';
 
 import PipeLine from './BoardArea/PipeLine.vue';
 
-const { mapGetters } = createNamespacedHelpers('board');
+const { mapGetters, mapState, mapActions } = createNamespacedHelpers('board');
 
 export default {
   name: 'BoardArea',
@@ -27,26 +27,30 @@ export default {
     Draggable,
     PipeLine,
   },
-  props: {
-    boardData: {
-      type: Object,
-      default: () => {},
-    },
-  },
   computed: {
     wrappedPipeLineList: {
       get() {
         return this.getFilteredPipeLineList;
       },
       set(value) {
-        console.log(value);
+        console.log(value, this.boardData);
+        this.updatePipeLineOrder({
+          boardId: this.boardData.boardId,
+          pipeLineList: value,
+        });
       },
     },
     ...mapGetters([
       'getFilteredPipeLineList',
     ]),
+    ...mapState([
+      'boardData',
+    ]),
   },
   methods: {
+    ...mapActions([
+      'updatePipeLineOrder',
+    ]),
   },
 };
 </script>

@@ -4,6 +4,7 @@
       <span class="navbar-brand mb-0 h1">{{ pipeLineName }}</span>
     </nav>
     <draggable
+      class="card-container"
       :options="options"
       v-model="wrappedCardList"
       @start="startDragging"
@@ -84,5 +85,8 @@ export default {
   }
   .navbar {
     background-color: #6f7180;
+  }
+  .card-container {
+    height: 100%;
   }
 </style>

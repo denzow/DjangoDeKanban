@@ -36,6 +36,16 @@ const actions = {
     });
     commit('updateCardOrder', { pipeLineId, cardList });
   },
+  updatePipeLineOrder({ commit, getters }, { boardId, pipeLineList }) {
+    console.log(boardId, pipeLineList);
+    const socket = getters.getSocket;
+    socket.sendObj({
+      type: 'update_pipe_line_order',
+      boardId,
+      pipeLineIdList: pipeLineList.map(x => x.pipeLineId),
+    });
+    commit('updatePipeLineOrder', { pipeLineList });
+  },
 };
 
 const mutations = {
@@ -45,6 +55,9 @@ const mutations = {
   updateCardOrder(state, { pipeLineId, cardList }) {
     const targetPipeLine = state.boardData.pipeLineList.find(pipeLine => pipeLine.pipeLineId === pipeLineId);
     targetPipeLine.cardList = cardList;
+  },
+  updatePipeLineOrder(state, { pipeLineList }) {
+    state.boardData.pipeLineList = pipeLineList;
   },
 };
 
