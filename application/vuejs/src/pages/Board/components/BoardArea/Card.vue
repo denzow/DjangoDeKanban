@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card" @click="openCard">
     <div class="card-body">
       <h5 class="card-title">{{ title }}</h5>
     </div>
@@ -8,6 +8,9 @@
 
 <script>
 
+import { createNamespacedHelpers } from 'vuex';
+
+const { mapGetters } = createNamespacedHelpers('board');
 export default {
   name: 'Card',
   props: {
@@ -23,6 +26,16 @@ export default {
     content() {
       return this.card.content;
     },
+    ...mapGetters(['getBoardId']),
+  },
+  methods: {
+    openCard() {
+      console.log('OPEN');
+      this.$router.push({
+        path: `/board/${this.getBoardId}/card/${this.card.cardId}`,
+        query: this.$route.query,
+      });
+    },
   },
 };
 </script>
@@ -30,5 +43,6 @@ export default {
 <style lang='scss' scoped>
   .card {
     margin-bottom: 0.2rem;
+    cursor: pointer;
   }
 </style>

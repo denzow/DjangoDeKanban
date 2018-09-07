@@ -13,6 +13,7 @@
       />
       <AddPipeLine />
     </Draggable>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -22,7 +23,6 @@ import { createNamespacedHelpers } from 'vuex';
 
 import PipeLine from './BoardArea/PipeLine.vue';
 import AddPipeLine from './BoardArea/AddPipeLine.vue';
-
 
 const { mapGetters, mapState, mapActions } = createNamespacedHelpers('board');
 

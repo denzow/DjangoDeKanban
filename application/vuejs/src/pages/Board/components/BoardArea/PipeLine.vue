@@ -17,7 +17,7 @@
       <Card v-for="card in wrappedCardList"
             class="item"
             :card="card"
-            :key="card.id"
+            :key="card.cardId"
       />
     </Draggable>
   </div>
@@ -29,7 +29,7 @@ import { createNamespacedHelpers } from 'vuex';
 import Draggable from 'vuedraggable';
 import Card from './Card.vue';
 
-const { mapActions } = createNamespacedHelpers('board');
+const { mapActions, mapGetters } = createNamespacedHelpers('board');
 
 
 export default {
@@ -80,6 +80,9 @@ export default {
     ...mapActions([
       'updateCardOrder',
       'addCard',
+    ]),
+    ...mapGetters([
+      'getBoardId',
     ]),
   },
   data() {

@@ -20,7 +20,7 @@ export default function WebSocketMiddleware(router) {
 
     if (to.meta.ws) {
       console.log(to, `/ws${to.path}`);
-      Vue.use(VueNativeSock, `${WS_PROTOCOL}//${window.location.host}/ws${to.path}`, {
+      Vue.use(VueNativeSock, `${WS_PROTOCOL}//${window.location.host}/ws${to.meta.ws(to)}`, {
         connectManually: true,
         reconnection: true,
         reconnectionAttempts: 5,

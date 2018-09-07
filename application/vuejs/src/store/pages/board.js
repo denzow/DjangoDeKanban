@@ -16,6 +16,9 @@ const getters = {
   getFilteredPipeLineList(state) {
     return state.boardData.pipeLineList;
   },
+  getBoardId(state) {
+    return state.boardData.boardId;
+  },
 };
 
 const actions = {
