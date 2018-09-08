@@ -1,4 +1,8 @@
+import json
+
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
 from modules.kanban import service as kanban_sv
 from .base import BaseApiView
@@ -28,10 +32,24 @@ class BoardApi(BaseApiView):
         })
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class CardApi(BaseApiView):
 
     def get(self, _, board_id, card_id):
         card = kanban_sv.get_card_by_card_id(card_id)
+
+        return JsonResponse({
+            'card_data': {
+                'title': card.title,
+                'content': card.content,
+                'updated_at': card.updated_at,
+            }
+        })
+
+    def patch(self, request, board_id, card_id):
+        data = json.loads(request.body)
+        content = data['content']
+        card = kanban_sv.update_card_content(card_id=card_id, content=content)
 
         return JsonResponse({
             'card_data': {

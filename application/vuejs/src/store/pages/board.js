@@ -73,6 +73,10 @@ const actions = {
     const cardData = await kanbanClient.getCardData({ boardId, cardId });
     commit('setFocusedCard', cardData);
   },
+  async updateCardContent({ commit }, { boardId, cardId, content }) {
+    const cardData = await kanbanClient.updateCardData({ boardId, cardId, content });
+    commit('setFocusedCard', cardData);
+  },
 };
 
 const mutations = {

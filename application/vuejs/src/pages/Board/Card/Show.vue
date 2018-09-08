@@ -8,12 +8,16 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
-          {{ focusedCard.content }}
+        <div class="modal-body" v-show="!isEditing">
+          <p v-if="focusedCard.content" @dblclick="startEdit" class="card-content">{{ focusedCard.content }}</p>
+          <p v-else @click="startEdit" class="empty-content">enter content.</p>
+        </div>
+        <div class="modal-body" v-show="isEditing">
+          <textarea class="edit-area" v-model="editContent"></textarea>
+          <button type="button" class="btn btn-primary" @click="saveContent">Save</button>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" @click="close">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-primary" @click="close">Close</button>
         </div>
       </div>
     </div>
@@ -41,6 +45,12 @@ export default {
   computed: {
     ...mapState(['focusedCard']),
   },
+  data() {
+    return {
+      isEditing: false,
+      editContent: '',
+    };
+  },
   methods: {
     close() {
       this.$router.push({
@@ -48,7 +58,22 @@ export default {
         query: this.$route.query,
       });
     },
-    ...mapActions(['fetchFocusedCard']),
+    startEdit() {
+      this.isEditing = true;
+      this.editContent = this.focusedCard.content;
+    },
+    async saveContent() {
+      this.isEditing = false;
+      await this.updateCardContent({
+        boardId: this.boardId,
+        cardId: this.cardId,
+        content: this.editContent,
+      });
+    },
+    ...mapActions([
+      'fetchFocusedCard',
+      'updateCardContent',
+    ]),
   },
   watch: {
     cardId: {
@@ -72,5 +97,16 @@ export default {
   }
   .modal-dialog {
     z-index: 1060;
+  }
+  .edit-area {
+    width: 95%;
+    height: 5rem;
+  }
+  .empty-content {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  .card-content {
+    white-space: pre;
   }
 </style>

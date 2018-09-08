@@ -53,6 +53,13 @@ class KanbanClient extends Client {
     const response = await this._get(`${this.baseUrl}/boards/${boardId}/cards/${cardId}/`);
     return response.data.cardData;
   }
+
+  async updateCardData({ boardId, cardId, content }) {
+    const response = await this._patch(`${this.baseUrl}/boards/${boardId}/cards/${cardId}/`, {
+      content,
+    });
+    return response.data.cardData;
+  }
 }
 
 

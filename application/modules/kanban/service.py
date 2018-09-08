@@ -79,6 +79,18 @@ def update_pipe_line_order(board_id, pipe_line_id_list):
         pipe_line.save()
 
 
+def update_card_content(card_id, content):
+    """
+    :param int card_id:
+    :param str content:
+    :return:
+    """
+    card = Card.get_by_id(card_id)
+    card.content = content
+    card.save()
+    return card
+
+
 def add_pipe_line(board_id, pipe_line_name):
     board = Board.get_by_id(board_id)
     current_count = PipeLine.get_current_pipe_line_count_by_board(board)
