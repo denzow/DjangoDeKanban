@@ -56,7 +56,7 @@ class BaseJsonConsumer(AsyncJsonWebsocketConsumer):
         """
         action = self.action_map.get(content['type'])
         if not action:
-            return
+            raise ConsumerException('{} is not a valid action_type'.format(content['type']))
         await action(content)
 
     async def group_add(self, group_name, channel_name):

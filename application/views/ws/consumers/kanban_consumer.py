@@ -18,6 +18,8 @@ class KanbanConsumer(BaseJsonConsumer):
             'update_pipe_line_order': self.update_pipe_line_order,
             'add_pipe_line': self.add_pipe_line,
             'add_card': self.add_card,
+            'broadcast_board_data': self.broadcast_board_data,
+            'broadcast_board_data_without_requester': self.broadcast_board_data_without_requester,
         }
 
     async def connect(self):
@@ -42,7 +44,6 @@ class KanbanConsumer(BaseJsonConsumer):
         """
         if event.get('requester_id') == self.consumer_id:
             return
-
         board_data = await database_sync_to_async(kanban_sv.get_board_data_board_id)(self.board_id)
         await self.send_data({
             'boardData': board_data,
@@ -61,7 +62,7 @@ class KanbanConsumer(BaseJsonConsumer):
         pipe_line_id = content['pipeLineId']
         card_id_list = content['cardIdList']
         await database_sync_to_async(kanban_sv.update_card_order)(pipe_line_id, card_id_list)
-        await self._broadcast_board_data_without_requester()
+        await self.broadcast_board_data_without_requester()
 
     async def update_pipe_line_order(self, content):
         """
@@ -74,23 +75,23 @@ class KanbanConsumer(BaseJsonConsumer):
         board_id = content['boardId']
         pipe_line_id_list = content['pipeLineIdList']
         await database_sync_to_async(kanban_sv.update_pipe_line_order)(board_id, pipe_line_id_list)
-        await self._broadcast_board_data_without_requester()
+        await self.broadcast_board_data_without_requester()
 
     async def add_pipe_line(self, content):
         print(content)
         board_id = content['boardId']
         pipe_line_name = content['pipeLineName']
         await database_sync_to_async(kanban_sv.add_pipe_line)(board_id, pipe_line_name)
-        await self._broadcast_board_data()
+        await self.broadcast_board_data()
 
     async def add_card(self, content):
         print(content)
         pipe_line_id = content['pipeLineId']
         card_title = content['cardTitle']
         await database_sync_to_async(kanban_sv.add_card)(pipe_line_id, card_title)
-        await self._broadcast_board_data()
+        await self.broadcast_board_data()
 
-    async def _broadcast_board_data(self):
+    async def broadcast_board_data(self, *args):
         await self.group_send(
             self.room_group_name,
             {
@@ -98,7 +99,7 @@ class KanbanConsumer(BaseJsonConsumer):
             }
         )
 
-    async def _broadcast_board_data_without_requester(self):
+    async def broadcast_board_data_without_requester(self, *args):
         await self.group_send(
             self.room_group_name,
             {

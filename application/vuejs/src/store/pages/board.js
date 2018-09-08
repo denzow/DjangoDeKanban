@@ -1,6 +1,5 @@
 import KanbanClient from '@/utils/kanbanClient';
 import camelcaseKeys from 'camelcase-keys';
-import kanbanClient from "../../utils/kanbanClient";
 
 
 const state = {
@@ -29,6 +28,13 @@ const actions = {
     socket.sendObj({
       type: 'init_board',
       boardId,
+    });
+  },
+  broadcastBoardData({ getters }) {
+    console.log('call broadcastBoardData');
+    const socket = getters.getSocket;
+    socket.sendObj({
+      type: 'broadcast_board_data',
     });
   },
   updateCardOrder({ commit, getters }, { pipeLineId, cardList }) {
@@ -70,24 +76,26 @@ const actions = {
     });
   },
   async fetchFocusedCard({ commit }, { boardId, cardId }) {
-    const cardData = await kanbanClient.getCardData({ boardId, cardId });
+    const cardData = await KanbanClient.getCardData({ boardId, cardId });
     commit('setFocusedCard', cardData);
   },
   async updateCardContent({ commit }, { boardId, cardId, content }) {
-    const cardData = await kanbanClient.updateCardData({
+    const cardData = await KanbanClient.updateCardData({
       boardId,
       cardId,
       content,
     });
     commit('setFocusedCard', cardData);
   },
-  async updateCardTitle({ commit }, { boardId, cardId, title }) {
-    const cardData = await kanbanClient.updateCardData({
+  async updateCardTitle({ commit, dispatch }, { boardId, cardId, title }) {
+    const cardData = await KanbanClient.updateCardData({
       boardId,
       cardId,
       title,
     });
     commit('setFocusedCard', cardData);
+    // titleはボード自体に出ているので他のクライアントへの反映を依頼する必要がある
+    dispatch('broadcastBoardData');
   },
 };
 
