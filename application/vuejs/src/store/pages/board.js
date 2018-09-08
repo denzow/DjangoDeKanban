@@ -74,7 +74,19 @@ const actions = {
     commit('setFocusedCard', cardData);
   },
   async updateCardContent({ commit }, { boardId, cardId, content }) {
-    const cardData = await kanbanClient.updateCardData({ boardId, cardId, content });
+    const cardData = await kanbanClient.updateCardData({
+      boardId,
+      cardId,
+      content,
+    });
+    commit('setFocusedCard', cardData);
+  },
+  async updateCardTitle({ commit }, { boardId, cardId, title }) {
+    const cardData = await kanbanClient.updateCardData({
+      boardId,
+      cardId,
+      title,
+    });
     commit('setFocusedCard', cardData);
   },
 };

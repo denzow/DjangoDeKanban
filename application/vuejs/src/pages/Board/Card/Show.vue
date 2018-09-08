@@ -1,18 +1,26 @@
 <template>
-  <div v-if="fetchFocusedCard" class="modal" aria-labelledby="exampleModalLongTitle" aria-hidden="true" @click="close">
+  <div v-if="fetchFocusedCard" class="modal" aria-labelledby="modal-title" aria-hidden="true" @click="close">
     <div class="modal-dialog" role="document" @click.prevent.stop="">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">{{ focusedCard.title }}</h5>
+          <h5 class="modal-title" id="modal-title">
+            <span v-show="!isTitleEditing" @dblclick="startTitleEdit">
+              {{ focusedCard.title }}
+            </span>
+            <span v-show="isTitleEditing">
+              <input type="text" v-model="editTitle">
+              <button type="button" class="btn btn-primary" @click="saveTitle">save</button>
+            </span>
+          </h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body" v-show="!isEditing">
-          <p v-if="focusedCard.content" @dblclick="startEdit" class="card-content">{{ focusedCard.content }}</p>
-          <p v-else @click="startEdit" class="empty-content">enter content.</p>
+        <div class="modal-body" v-show="!isContentEditing">
+          <p v-if="focusedCard.content" @dblclick="startContentEdit" class="card-content">{{ focusedCard.content }}</p>
+          <p v-else @click="startContentEdit" class="empty-content">enter content.</p>
         </div>
-        <div class="modal-body" v-show="isEditing">
+        <div class="modal-body" v-show="isContentEditing">
           <textarea class="edit-area" v-model="editContent"></textarea>
           <button type="button" class="btn btn-primary" @click="saveContent">Save</button>
         </div>
@@ -47,8 +55,10 @@ export default {
   },
   data() {
     return {
-      isEditing: false,
+      isContentEditing: false,
       editContent: '',
+      isTitleEditing: false,
+      editTitle: '',
     };
   },
   methods: {
@@ -58,21 +68,36 @@ export default {
         query: this.$route.query,
       });
     },
-    startEdit() {
-      this.isEditing = true;
+    startContentEdit() {
+      this.isContentEditing = true;
       this.editContent = this.focusedCard.content;
     },
+    startTitleEdit() {
+      this.isTitleEditing = true;
+      this.editTitle = this.focusedCard.title;
+    },
     async saveContent() {
-      this.isEditing = false;
+      this.isContentEditing = false;
+      if (this.editContent === this.focusedCard.content) return;
       await this.updateCardContent({
         boardId: this.boardId,
         cardId: this.cardId,
         content: this.editContent,
       });
     },
+    async saveTitle() {
+      this.isTitleEditing = false;
+      if (this.editTitle === this.focusedCard.title) return;
+      await this.updateCardTitle({
+        boardId: this.boardId,
+        cardId: this.cardId,
+        title: this.editTitle,
+      });
+    },
     ...mapActions([
       'fetchFocusedCard',
       'updateCardContent',
+      'updateCardTitle',
     ]),
   },
   watch: {

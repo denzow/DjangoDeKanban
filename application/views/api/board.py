@@ -48,8 +48,9 @@ class CardApi(BaseApiView):
 
     def patch(self, request, board_id, card_id):
         data = json.loads(request.body)
-        content = data['content']
-        card = kanban_sv.update_card_content(card_id=card_id, content=content)
+        title = data.get('title')
+        content = data.get('content')
+        card = kanban_sv.update_card(card_id=card_id, title=title, content=content)
 
         return JsonResponse({
             'card_data': {
