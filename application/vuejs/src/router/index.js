@@ -24,7 +24,7 @@ const router = new Router({
           component: Home,
         },
         {
-          path: 'board/:boardId',
+          path: 'boards/:boardId',
           component: Board,
           props: route => ({ boardId: parseInt(route.params.boardId, 10) }),
           meta: {
@@ -32,14 +32,14 @@ const router = new Router({
           },
           children: [
             {
-              path: 'card/:cardId',
+              path: 'cards/:cardId',
               component: CardShow,
               props: route => ({
                 cardId: parseInt(route.params.cardId, 10),
                 boardId: parseInt(route.params.boardId, 10),
               }),
               meta: {
-                ws: route => route.path.split('/card')[0],
+                ws: route => route.path.split('/cards')[0],
               },
             },
           ],

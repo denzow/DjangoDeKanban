@@ -28,4 +28,15 @@ class BoardApi(BaseApiView):
         })
 
 
+class CardApi(BaseApiView):
 
+    def get(self, _, board_id, card_id):
+        card = kanban_sv.get_card_by_card_id(card_id)
+
+        return JsonResponse({
+            'card_data': {
+                'title': card.title,
+                'content': card.content,
+                'updated_at': card.updated_at,
+            }
+        })

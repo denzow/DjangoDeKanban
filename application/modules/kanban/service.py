@@ -19,6 +19,14 @@ def get_board_by_board_id(board_id):
     return Board.get_by_id(board_id)
 
 
+def get_card_by_card_id(card_id):
+    """
+    :param int card_id:
+    :return:
+    """
+    return Card.get_by_id(card_id)
+
+
 def get_board_data_board_id(board_id):
     """
     borad and pipeline and card.

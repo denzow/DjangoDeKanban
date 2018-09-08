@@ -1,15 +1,15 @@
 <template>
-  <div class="modal" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+  <div v-if="fetchFocusedCard" class="modal" aria-labelledby="exampleModalLongTitle" aria-hidden="true" @click="close">
+    <div class="modal-dialog" role="document" @click.prevent.stop="">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+          <h5 class="modal-title" id="exampleModalLongTitle">{{ focusedCard.title }}</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          AAAAAAAAAAAAAAAAAAAAAA
+          {{ focusedCard.content }}
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" @click="close">Close</button>
@@ -21,6 +21,11 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex';
+
+const { mapState, mapActions } = createNamespacedHelpers('board');
+
+
 export default {
   props: {
     cardId: {
@@ -33,19 +38,27 @@ export default {
     },
   },
   name: 'CardShow',
+  computed: {
+    ...mapState(['focusedCard']),
+  },
   methods: {
     close() {
       this.$router.push({
-        path: `/board/${this.boardId}`,
+        path: `/boards/${this.boardId}`,
         query: this.$route.query,
       });
     },
+    ...mapActions(['fetchFocusedCard']),
   },
   watch: {
     cardId: {
       immediate: true,
       handler(cardId) {
         console.log(cardId);
+        this.fetchFocusedCard({
+          boardId: this.boardId,
+          cardId,
+        });
       },
     },
   },

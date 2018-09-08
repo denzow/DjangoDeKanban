@@ -32,7 +32,7 @@ export default {
     openCard() {
       console.log('OPEN');
       this.$router.push({
-        path: `/board/${this.getBoardId}/card/${this.card.cardId}`,
+        path: `/boards/${this.getBoardId}/cards/${this.card.cardId}`,
         query: this.$route.query,
       });
     },

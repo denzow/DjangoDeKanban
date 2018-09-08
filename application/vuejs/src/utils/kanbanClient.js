@@ -45,8 +45,13 @@ class KanbanClient extends Client {
   }
 
   async getBoardList() {
-    const response = await this._get(`${this.baseUrl}/board`);
+    const response = await this._get(`${this.baseUrl}/boards/`);
     return response.data.boardList;
+  }
+
+  async getCardData({ boardId, cardId }) {
+    const response = await this._get(`${this.baseUrl}/boards/${boardId}/cards/${cardId}/`);
+    return response.data.cardData;
   }
 }
 

@@ -1,11 +1,13 @@
-// import KanbanClient from '@/utils/kanbanClient';
+import KanbanClient from '@/utils/kanbanClient';
 import camelcaseKeys from 'camelcase-keys';
+import kanbanClient from "../../utils/kanbanClient";
 
 
 const state = {
   boardData: {
     pipeLineList: [],
   },
+  focusedCard: {},
 };
 
 
@@ -67,6 +69,10 @@ const actions = {
       cardTitle,
     });
   },
+  async fetchFocusedCard({ commit }, { boardId, cardId }) {
+    const cardData = await kanbanClient.getCardData({ boardId, cardId });
+    commit('setFocusedCard', cardData);
+  },
 };
 
 const mutations = {
@@ -79,6 +85,9 @@ const mutations = {
   },
   updatePipeLineOrder(state, { pipeLineList }) {
     state.boardData.pipeLineList = pipeLineList;
+  },
+  setFocusedCard(state, cardData) {
+    state.focusedCard = cardData;
   },
 };
 

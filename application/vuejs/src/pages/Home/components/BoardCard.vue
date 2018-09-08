@@ -24,7 +24,7 @@ export default {
   computed: {
     boardUrl() {
       if (this.boardId !== null) {
-        return `/board/${this.boardId}`;
+        return `/boards/${this.boardId}`;
       }
       return '#';
     },
