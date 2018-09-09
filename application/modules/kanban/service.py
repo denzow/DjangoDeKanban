@@ -128,3 +128,8 @@ def add_card(pipe_line_id, card_title):
         pipe_line=pipe_line,
         order=current_count + 1,
     )
+
+
+def delete_card(card_id):
+    card = Card.get_by_id(card_id)
+    card.delete()

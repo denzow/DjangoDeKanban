@@ -25,6 +25,7 @@
           <button type="button" class="btn btn-primary" @click="saveContent">Save</button>
         </div>
         <div class="modal-footer">
+          <button type="button" class="btn btn-danger" @click="deleteCardAction">delete</button>
           <button type="button" class="btn btn-primary" @click="close">Close</button>
         </div>
       </div>
@@ -68,6 +69,14 @@ export default {
         query: this.$route.query,
       });
     },
+    async deleteCardAction() {
+      await this.deleteCard({
+        boardId: this.boardId,
+        cardId: this.cardId,
+      });
+      window.alert('delete succeeded');
+      this.close();
+    },
     startContentEdit() {
       this.isContentEditing = true;
       this.editContent = this.focusedCard.content;
@@ -98,6 +107,7 @@ export default {
       'fetchFocusedCard',
       'updateCardContent',
       'updateCardTitle',
+      'deleteCard',
     ]),
   },
   watch: {

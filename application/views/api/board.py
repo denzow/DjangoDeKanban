@@ -59,3 +59,9 @@ class CardApi(BaseApiView):
                 'updated_at': card.updated_at,
             }
         })
+
+    def delete(self, _, board_id, card_id):
+        kanban_sv.delete_card(card_id=card_id)
+        return JsonResponse({
+            'success': True
+        })

@@ -105,6 +105,14 @@ const actions = {
     // titleはボード自体に出ているので他のクライアントへの反映を依頼する必要がある
     dispatch('broadcastBoardData');
   },
+  async deleteCard({ dispatch }, { boardId, cardId }) {
+    await KanbanClient.deleteCard({
+      boardId,
+      cardId,
+    });
+    // カード自体はボード自体に出ているので他のクライアントへの反映を依頼する必要がある
+    dispatch('broadcastBoardData');
+  },
 };
 
 const mutations = {

@@ -2,7 +2,7 @@
   <div class="pipe-line">
     <nav class="navbar navbar-dark">
       <span v-show="!isEditingPipeLineName">
-        <span class="navbar-brand mb-0 h1"
+        <span class="navbar-brand mb-0 h1 pipe-line-name"
               :class="{ 'waiting-rename' : isWaitingRename}"
               @dblclick="startPipeLineNameEdit">{{ pipeLineName }}</span>
         <span class="navbar-brand add-card" data-toggle="tooltip" data-placement="top"
@@ -134,6 +134,9 @@ export default {
   .pipe-line {
     margin-right: 1rem;
     width: 15rem;
+  }
+  .pipe-line-name {
+    cursor: pointer;
   }
   .navbar {
     background-color: #6f7180;

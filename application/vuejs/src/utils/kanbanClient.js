@@ -66,6 +66,10 @@ class KanbanClient extends Client {
     });
     return response.data.cardData;
   }
+
+  async deleteCard({ boardId, cardId }) {
+    await this._delete(`${this.baseUrl}/boards/${boardId}/cards/${cardId}/`);
+  }
 }
 
 
