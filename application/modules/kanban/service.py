@@ -82,8 +82,10 @@ def update_pipe_line_order(board_id, pipe_line_id_list):
 def update_card(card_id, title=None, content=None):
     """
     :param int card_id:
+    :param str title:
     :param str content:
     :return:
+    :rtype Card:
     """
     card = Card.get_by_id(card_id)
     if title:
@@ -92,6 +94,19 @@ def update_card(card_id, title=None, content=None):
         card.content = content
     card.save()
     return card
+
+
+def update_pipe_line(pipe_line_id, name=None):
+    """
+    :param int pipe_line_id:
+    :param str name:
+    :return:
+    """
+    pipe_line = PipeLine.get_by_id(pipe_line_id)
+    if name:
+        pipe_line.name = name
+    pipe_line.save()
+    return pipe_line
 
 
 def add_pipe_line(board_id, pipe_line_name):

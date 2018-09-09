@@ -1,10 +1,18 @@
 <template>
   <div class="pipe-line">
     <nav class="navbar navbar-dark">
-      <span class="navbar-brand mb-0 h1">{{ pipeLineName }}</span>
-      <span class="navbar-brand add-card" data-toggle="tooltip" data-placement="top"
-            title="Add Card" @click="addCardAction">
-        (+)
+      <span v-show="!isEditingPipeLineName">
+        <span class="navbar-brand mb-0 h1"
+              :class="{ 'waiting-rename' : isWaitingRename}"
+              @dblclick="startPipeLineNameEdit">{{ pipeLineName }}</span>
+        <span class="navbar-brand add-card" data-toggle="tooltip" data-placement="top"
+              title="Add Card" @click="addCardAction">
+          (+)
+        </span>
+      </span>
+      <span v-show="isEditingPipeLineName">
+        <input type="text" v-model="editPipeLineName">
+        <button type="button" class="btn btn-primary" @click="savePipeLineName">save</button>
       </span>
     </nav>
     <Draggable
@@ -44,6 +52,18 @@ export default {
       default: () => {},
     },
   },
+  data() {
+    return {
+      options: {
+        group: 'Cards',
+        animation: 300,
+        draggable: '.item',
+      },
+      isEditingPipeLineName: false,
+      isWaitingRename: false,
+      editPipeLineName: '',
+    };
+  },
   computed: {
     wrappedCardList: {
       get() {
@@ -59,6 +79,13 @@ export default {
     },
     pipeLineName() {
       return this.pipeLine.name;
+    },
+  },
+  watch: {
+    pipeLine(newPipeLine, oldPipeLine) {
+      if (newPipeLine.name !== oldPipeLine.name) {
+        this.isWaitingRename = false;
+      }
     },
   },
   methods: {
@@ -77,22 +104,28 @@ export default {
         });
       }
     },
+    startPipeLineNameEdit() {
+      this.isEditingPipeLineName = true;
+      this.editPipeLineName = this.pipeLine.name;
+    },
+    async savePipeLineName() {
+      this.isEditingPipeLineName = false;
+      if (this.editPipeLineName === this.pipeLine.name) return;
+      await this.renamePipeLine({
+        pipeLineId: this.pipeLine.pipeLineId,
+        pipeLineName: this.editPipeLineName,
+      });
+      // リネーム完了までのフラグ
+      this.isWaitingRename = true;
+    },
     ...mapActions([
       'updateCardOrder',
       'addCard',
+      'renamePipeLine',
     ]),
     ...mapGetters([
       'getBoardId',
     ]),
-  },
-  data() {
-    return {
-      options: {
-        group: 'Cards',
-        animation: 300,
-        draggable: '.item',
-      },
-    };
   },
 };
 </script>
@@ -104,6 +137,9 @@ export default {
   }
   .navbar {
     background-color: #6f7180;
+  }
+  .waiting-rename {
+    color: rgba(0, 0, 0, 0.3);
   }
   .card-container {
     height: 100%;

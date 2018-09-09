@@ -18,6 +18,7 @@ class KanbanConsumer(BaseJsonConsumer):
             'update_pipe_line_order': self.update_pipe_line_order,
             'add_pipe_line': self.add_pipe_line,
             'add_card': self.add_card,
+            'rename_pipe_line': self.rename_pipe_line,
             'broadcast_board_data': self.broadcast_board_data,
             'broadcast_board_data_without_requester': self.broadcast_board_data_without_requester,
         }
@@ -89,6 +90,12 @@ class KanbanConsumer(BaseJsonConsumer):
         pipe_line_id = content['pipeLineId']
         card_title = content['cardTitle']
         await database_sync_to_async(kanban_sv.add_card)(pipe_line_id, card_title)
+        await self.broadcast_board_data()
+
+    async def rename_pipe_line(self, content):
+        pipe_line_id = content['pipeLineId']
+        pipe_line_name = content['pipeLineName']
+        await database_sync_to_async(kanban_sv.update_pipe_line)(pipe_line_id, pipe_line_name)
         await self.broadcast_board_data()
 
     async def broadcast_board_data(self, *args):
