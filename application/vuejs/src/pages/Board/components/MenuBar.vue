@@ -1,12 +1,16 @@
 <template>
   <div class="board-menu-bar navbar navbar-dark bg-dark">
-    <span class="navbar-brand mb-0 h1">{{ boardName }}</span>
-      <nav class="my-2 my-md-0 mr-md-3">
-        <form class="form-inline mt-2 mt-md-0" id="search-form">
-          <input name="query" v-model="wrappedSearchWord" class="form-control mr-3"
-                 type="text" placeholder="Search" aria-label="Search">
-        </form>
-      </nav>
+    <span v-show="!isEditingBoardName" @dblclick="startBoardNameEdit" class="navbar-brand mb-0 h1 board-name">{{ boardName }}</span>
+    <span v-show="isEditingBoardName" class="navbar-brand mb-0 h1">
+      <input type="text" v-model="editBoardName" />
+      <button type="button" class="btn btn-primary" @click="saveBoardName">save</button>
+    </span>
+    <nav class="my-2 my-md-0 mr-md-3">
+      <form class="form-inline mt-2 mt-md-0" id="search-form">
+        <input name="query" v-model="wrappedSearchWord" class="form-control mr-3"
+               type="text" placeholder="Search" aria-label="Search">
+      </form>
+    </nav>
   </div>
 </template>
 
@@ -18,11 +22,11 @@ const { mapActions, mapState } = createNamespacedHelpers('board');
 
 export default {
   name: 'MenuBar',
-  props: {
-    boardName: {
-      type: String,
-      default: null,
-    },
+  data() {
+    return {
+      isEditingBoardName: false,
+      editBoardName: '',
+    };
   },
   computed: {
     wrappedSearchWord: {
@@ -33,17 +37,42 @@ export default {
         this.setSearchWord(val);
       },
     },
-    ...mapState(['searchWord']),
+    boardName() {
+      return this.boardData.name;
+    },
+    ...mapState([
+      'searchWord',
+      'boardData',
+    ]),
   },
   methods: {
-    ...mapActions(['setSearchWord']),
+    startBoardNameEdit() {
+      this.isEditingBoardName = true;
+      this.editBoardName = this.boardName;
+      console.log('start', this.isEditingBoardName);
+    },
+    saveBoardName() {
+      this.isEditingBoardName = false;
+      if (this.editBoardName === this.boardName) return;
+      this.renameBoard({
+        boardId: this.boardData.boardId,
+        boardName: this.editBoardName,
+      });
+    },
+    ...mapActions([
+      'setSearchWord',
+      'renameBoard',
+    ]),
   },
 };
 </script>
 
 <style scoped>
-.board-menu-bar {
-  margin: 1rem 0;
-  width: 100%;
-}
+  .board-menu-bar {
+    margin: 1rem 0;
+    width: 100%;
+  }
+  .board-name {
+    cursor: pointer;
+  }
 </style>

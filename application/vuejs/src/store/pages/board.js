@@ -116,6 +116,14 @@ const actions = {
       pipeLineId,
     });
   },
+  renameBoard({ getters }, { boardId, boardName }) {
+    const socket = getters.getSocket;
+    socket.sendObj({
+      type: 'rename_board',
+      boardId,
+      boardName,
+    });
+  },
   async fetchFocusedCard({ commit }, { boardId, cardId }) {
     const cardData = await KanbanClient.getCardData({ boardId, cardId });
     commit('setFocusedCard', cardData);

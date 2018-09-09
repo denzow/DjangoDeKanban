@@ -109,6 +109,19 @@ def update_pipe_line(pipe_line_id, name=None):
     return pipe_line
 
 
+def update_board(board_id, name=None):
+    """
+    :param int board_id:
+    :param str name:
+    :return:
+    """
+    board = Board.get_by_id(board_id)
+    if name:
+        board.name = name
+    board.save()
+    return board
+
+
 def add_pipe_line(board_id, pipe_line_name):
     board = Board.get_by_id(board_id)
     current_count = PipeLine.get_current_pipe_line_count_by_board(board)
