@@ -25,6 +25,10 @@ class Card(models.Model):
             return None
 
     @classmethod
+    def delete_by_pipe_line(cls, pipe_line):
+        cls.objects.filter(pipe_line=pipe_line).delete()
+
+    @classmethod
     def get_list_by_pipe_line(cls, pipe_line):
         return list(cls.objects.filter(pipe_line=pipe_line).order_by('order'))
 

@@ -83,6 +83,15 @@ const actions = {
       pipeLineName,
     });
   },
+  deletePipeLine({ getters }, { boardId, pipeLineId }) {
+    console.log(boardId, pipeLineId);
+    const socket = getters.getSocket;
+    socket.sendObj({
+      type: 'delete_pipe_line',
+      boardId,
+      pipeLineId,
+    });
+  },
   async fetchFocusedCard({ commit }, { boardId, cardId }) {
     const cardData = await KanbanClient.getCardData({ boardId, cardId });
     commit('setFocusedCard', cardData);

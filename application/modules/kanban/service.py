@@ -130,6 +130,11 @@ def add_card(pipe_line_id, card_title):
     )
 
 
+def delete_pipe_line(pipe_line_id):
+    pipe_line = PipeLine.get_by_id(pipe_line_id)
+    pipe_line.delete()
+
+
 def delete_card(card_id):
     card = Card.get_by_id(card_id)
     card.delete()

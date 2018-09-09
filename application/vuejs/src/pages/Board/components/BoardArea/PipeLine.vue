@@ -5,9 +5,9 @@
         <span class="navbar-brand mb-0 h1 pipe-line-name"
               :class="{ 'waiting-rename' : isWaitingRename}"
               @dblclick="startPipeLineNameEdit">{{ pipeLineName }}</span>
-        <span class="navbar-brand add-card" data-toggle="tooltip" data-placement="top"
-              title="Add Card" @click="addCardAction">
-          (+)
+        <span class="navbar-brand delete-pipe-line" data-toggle="tooltip" data-placement="top"
+              title="delete pipeline" @click="delPipeLineAction">
+          (-)
         </span>
       </span>
       <span v-show="isEditingPipeLineName">
@@ -15,6 +15,9 @@
         <button type="button" class="btn btn-primary" @click="savePipeLineName">save</button>
       </span>
     </nav>
+    <button class="add-card-button btn btn-block" @click="addCardAction">
+      add card
+    </button>
     <Draggable
       class="card-container"
       :options="options"
@@ -104,6 +107,12 @@ export default {
         });
       }
     },
+    delPipeLineAction() {
+      this.deletePipeLine({
+        boardId: this.getBoardId(),
+        pipeLineId: this.pipeLine.pipeLineId,
+      });
+    },
     startPipeLineNameEdit() {
       this.isEditingPipeLineName = true;
       this.editPipeLineName = this.pipeLine.name;
@@ -122,6 +131,7 @@ export default {
       'updateCardOrder',
       'addCard',
       'renamePipeLine',
+      'deletePipeLine',
     ]),
     ...mapGetters([
       'getBoardId',
@@ -147,7 +157,17 @@ export default {
   .card-container {
     height: 100%;
   }
-  .add-card {
+  .delete-pipe-line {
     cursor: pointer;
+  }
+  .add-card-button {
+    cursor: pointer;
+    text-align: center;
+    background-color: #6f7180;
+    color: #FFFFFF;
+    border-color: #000;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 25px 25px 55px 5px/5px 55px 25px 25px;
   }
 </style>
