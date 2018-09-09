@@ -27,6 +27,7 @@
     >
       <Card v-for="card in wrappedCardList"
             class="item"
+            v-show="card.isShown"
             :card="card"
             :key="card.cardId"
       />

@@ -1,5 +1,7 @@
-import KanbanClient from '@/utils/kanbanClient';
+import _ from 'lodash';
 import camelcaseKeys from 'camelcase-keys';
+
+import KanbanClient from '@/utils/kanbanClient';
 
 
 const state = {
@@ -7,6 +9,7 @@ const state = {
     pipeLineList: [],
   },
   focusedCard: {},
+  searchWord: '',
 };
 
 
@@ -15,7 +18,25 @@ const getters = {
     return rootState.socket;
   },
   getFilteredPipeLineList(state) {
-    return state.boardData.pipeLineList;
+    const result = [];
+    state.boardData.pipeLineList.forEach(pipeline => {
+      const clonePipeLine = _.cloneDeep(pipeline);
+      clonePipeLine.cardList = clonePipeLine.cardList.map(card => {
+        const cloneCard = _.cloneDeep(card);
+        const content = cloneCard.content !== null ? cloneCard.content : '';
+        if (state.searchWord === null || state.searchWord === '') {
+          cloneCard.isShown = true;
+        } else {
+          cloneCard.isShown = (
+            cloneCard.title.toUpperCase().includes(state.searchWord.toUpperCase()) ||
+            content.toUpperCase().includes(state.searchWord.toUpperCase())
+          );
+        }
+        return cloneCard;
+      });
+      result.push(clonePipeLine);
+    });
+    return result;
   },
   getBoardId(state) {
     return state.boardData.boardId;
@@ -36,6 +57,9 @@ const actions = {
     socket.sendObj({
       type: 'broadcast_board_data',
     });
+  },
+  setSearchWord({ commit }, searchWord) {
+    commit('setSearchWord', searchWord);
   },
   updateCardOrder({ commit, getters }, { pipeLineId, cardList }) {
     console.log(pipeLineId, cardList);
@@ -137,6 +161,9 @@ const mutations = {
   },
   setFocusedCard(state, cardData) {
     state.focusedCard = cardData;
+  },
+  setSearchWord(state, searchWord) {
+    state.searchWord = searchWord;
   },
 };
 
