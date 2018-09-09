@@ -10,6 +10,10 @@ const actions = {
     const boardList = await KanbanClient.getBoardList();
     commit('setBoardList', { boardList });
   },
+  async addBoard({ dispatch }, { boardName }) {
+    KanbanClient.addBoard({ boardName });
+    dispatch('fetchBoardList');
+  },
 };
 
 const mutations = {

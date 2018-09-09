@@ -8,6 +8,7 @@ from modules.kanban import service as kanban_sv
 from .base import BaseApiView
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class BoardListApi(BaseApiView):
 
     def get(self, _):
@@ -19,6 +20,20 @@ class BoardListApi(BaseApiView):
             })
         return JsonResponse({
             'board_list': board_list,
+        })
+
+    def post(self, request):
+        data = json.loads(request.body)
+        board_name = data.get('boardName')
+        board = kanban_sv.add_board(
+            owner=self.login_member,
+            board_name=board_name
+        )
+        return JsonResponse({
+            'board_data': {
+                'id': board.id,
+                'name': board.name,
+            }
         })
 
 

@@ -13,6 +13,10 @@ class Board(models.Model):
         return '{}: {} of {}'.format(self.pk, self.name, self.owner)
 
     @classmethod
+    def create(cls, **params):
+        return cls.objects.create(**params)
+
+    @classmethod
     def get_by_id(cls, board_id):
         try:
             return cls.objects.get(pk=board_id)

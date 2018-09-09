@@ -122,6 +122,18 @@ def update_board(board_id, name=None):
     return board
 
 
+def add_board(owner, board_name):
+    """
+    :param User owner:
+    :param str board_name:
+    :return:
+    """
+    return Board.create(
+        owner=owner,
+        name=board_name
+    )
+
+
 def add_pipe_line(board_id, pipe_line_name):
     board = Board.get_by_id(board_id)
     current_count = PipeLine.get_current_pipe_line_count_by_board(board)
