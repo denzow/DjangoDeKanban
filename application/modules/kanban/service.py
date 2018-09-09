@@ -1,6 +1,10 @@
 from .models import Board, PipeLine, Card
 
 
+def is_board_exist(board_id):
+    return Board.is_exist(board_id)
+
+
 def get_board_list_by_owner(owner):
     """
     :param owner:
@@ -153,6 +157,11 @@ def add_card(pipe_line_id, card_title):
         pipe_line=pipe_line,
         order=current_count + 1,
     )
+
+
+def delete_board(board_id):
+    board = Board.get_by_id(board_id)
+    board.delete()
 
 
 def delete_pipe_line(pipe_line_id):

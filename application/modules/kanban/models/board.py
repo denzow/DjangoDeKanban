@@ -17,6 +17,10 @@ class Board(models.Model):
         return cls.objects.create(**params)
 
     @classmethod
+    def is_exist(cls, board_id):
+        return Board.objects.filter(id=board_id).exists()
+
+    @classmethod
     def get_by_id(cls, board_id):
         try:
             return cls.objects.get(pk=board_id)
@@ -25,4 +29,4 @@ class Board(models.Model):
 
     @classmethod
     def get_list_by_owner(cls, owner):
-        return list(cls.objects.filter(owner=owner))
+        return list(cls.objects.filter(owner=owner).order_by('updated_at'))

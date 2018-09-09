@@ -2,7 +2,7 @@ import _ from 'lodash';
 import camelcaseKeys from 'camelcase-keys';
 
 import KanbanClient from '@/utils/kanbanClient';
-
+import router from '@/router';
 
 const state = {
   boardData: {
@@ -50,6 +50,9 @@ const actions = {
       type: 'init_board',
       boardId,
     });
+  },
+  backToHome() {
+    router.push('/');
   },
   broadcastBoardData({ getters }) {
     console.log('call broadcastBoardData');
@@ -114,6 +117,13 @@ const actions = {
       type: 'delete_pipe_line',
       boardId,
       pipeLineId,
+    });
+  },
+  deleteBoard({ getters }, { boardId }) {
+    const socket = getters.getSocket;
+    socket.sendObj({
+      type: 'delete_board',
+      boardId,
     });
   },
   renameBoard({ getters }, { boardId, boardName }) {

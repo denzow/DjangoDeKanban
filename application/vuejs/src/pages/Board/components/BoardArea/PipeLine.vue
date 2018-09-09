@@ -109,6 +109,7 @@ export default {
       }
     },
     delPipeLineAction() {
+      if (!window.confirm('Are you sure?')) return;
       this.deletePipeLine({
         boardId: this.getBoardId(),
         pipeLineId: this.pipeLine.pipeLineId,

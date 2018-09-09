@@ -20,6 +20,7 @@ class KanbanConsumer(BaseJsonConsumer):
             'add_card': self.add_card,
             'rename_pipe_line': self.rename_pipe_line,
             'delete_pipe_line': self.delete_pipe_line,
+            'delete_board': self.delete_board,
             'rename_board': self.rename_board,
             'broadcast_board_data': self.broadcast_board_data,
             'broadcast_board_data_without_requester': self.broadcast_board_data_without_requester,
@@ -38,7 +39,10 @@ class KanbanConsumer(BaseJsonConsumer):
             self.channel_name
         )
         await self.accept()
-        await self.send_board_data({})
+        if await database_sync_to_async(kanban_sv.is_board_exist)(self.board_id):
+            await self.send_board_data({})
+        else:
+            await self.send_back_to_home()
 
     async def send_board_data(self, event):
         """
@@ -111,6 +115,22 @@ class KanbanConsumer(BaseJsonConsumer):
         pipe_line_id = content['pipeLineId']
         await database_sync_to_async(kanban_sv.delete_pipe_line)(pipe_line_id)
         await self.broadcast_board_data()
+
+    async def delete_board(self, content):
+        board_id = content['boardId']
+        await database_sync_to_async(kanban_sv.delete_board)(board_id)
+        await self.broadcast_delete_board()
+
+    async def send_back_to_home(self, *args):
+        await self.send_data({}, action='backToHome')
+
+    async def broadcast_delete_board(self, *args):
+        await self.group_send(
+            self.room_group_name,
+            {
+                'type': 'send_back_to_home',
+            }
+        )
 
     async def broadcast_board_data(self, *args):
         await self.group_send(

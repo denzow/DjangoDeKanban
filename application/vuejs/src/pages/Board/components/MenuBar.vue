@@ -9,6 +9,7 @@
       <form class="form-inline mt-2 mt-md-0" id="search-form">
         <input name="query" v-model="wrappedSearchWord" class="form-control mr-3"
                type="text" placeholder="Search" aria-label="Search">
+        <button type="button" class="btn btn-outline-danger" @click.prevent="deleteBoardAction">delete</button>
       </form>
     </nav>
   </div>
@@ -59,9 +60,16 @@ export default {
         boardName: this.editBoardName,
       });
     },
+    deleteBoardAction() {
+      if (!window.confirm('Are you sure?')) return;
+      this.deleteBoard({
+        boardId: this.boardData.boardId,
+      });
+    },
     ...mapActions([
       'setSearchWord',
       'renameBoard',
+      'deleteBoard',
     ]),
   },
 };
