@@ -1,9 +1,11 @@
 from django.urls import path
 from django.contrib.auth.decorators import login_required
-from .board import BoardListApi, BoardApi, CardApi
+from .accounts import AccountsApi
+from .boards import BoardListApi, BoardApi, CardApi
 
 
 urlpatterns = [
+    path('accounts/', login_required(AccountsApi.as_view())),
     path('boards/', login_required(BoardListApi.as_view())),
     path('boards/<int:board_id>/', login_required(BoardApi.as_view())),
     path('boards/<int:board_id>/cards/<int:card_id>/', login_required(CardApi.as_view())),

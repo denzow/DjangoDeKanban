@@ -18,3 +18,10 @@ $ docker-compose up
 |db| django backend(postgres)|
 |redis| channels backend|
 |vuejs| compile *.vue(vuecli)|
+
+
+How To Use
+----------
+
+access `http://localhost:3000`
+

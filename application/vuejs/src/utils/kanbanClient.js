@@ -70,6 +70,11 @@ class KanbanClient extends Client {
   async deleteCard({ boardId, cardId }) {
     await this._delete(`${this.baseUrl}/boards/${boardId}/cards/${cardId}/`);
   }
+
+  async getAccountInfo() {
+    const response = await this._get(`${this.baseUrl}/accounts/`);
+    return response.data.accountInfo;
+  }
 }
 
 

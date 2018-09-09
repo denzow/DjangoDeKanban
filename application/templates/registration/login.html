@@ -7,11 +7,10 @@
   <div class="container py-5">
     <div class="row">
       <div class="col-md-12">
-        <h2 class="text-center text-white mb-4">Login Form</h2>
+        <h2 class="text-center mb-4">The KANBAN</h2>
         <div class="row">
           <div class="col-md-6 mx-auto">
 
-            <!-- form card login -->
             <div class="card rounded-0">
               <div class="card-header">
                 <h3 class="mb-0">Login</h3>
@@ -26,10 +25,10 @@
                     {% if user.is_authenticated %}
                     <p>Your account doesn't have access to this page. To proceed,
                     please login with an account that has access.</p>
-                    {% else %}
-                    <p>Please login to see this page.</p>
                     {% endif %}
                 {% endif %}
+
+                <p>Please login to see this page. (or <a href="/accounts/signup/">singup</a>)</p>
                 <form class="form" role="form" autocomplete="off" id="formLogin" method="post" action="{% url 'login' %}">
                   {% csrf_token %}
                   <div class="form-group">

@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import createLogger from 'vuex/dist/logger';
+import header from './header';
 import home from './pages/home';
 import board from './pages/board';
 
@@ -13,6 +14,7 @@ export default new Vuex.Store({
     ? [createLogger()]
     : [],
   modules: {
+    header,
     home,
     board,
   },
