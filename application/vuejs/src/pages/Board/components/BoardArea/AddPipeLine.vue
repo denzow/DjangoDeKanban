@@ -1,6 +1,6 @@
 <template>
-  <div class="add-pipe-line" @click="addPipeLineAction">
-    <nav class="navbar navbar-dark">
+  <div class="add-pipe-line">
+    <nav class="navbar navbar-dark add-pipe-line-button" @click="addPipeLineAction">
       <span class="navbar-brand mb-0 h1">
         Add List(+)
       </span>
@@ -43,6 +43,8 @@ export default {
   .add-pipe-line {
     margin-right: 1rem;
     width: 15rem;
+  }
+  .add-pipe-line-button {
     cursor: pointer;
   }
   .navbar {
