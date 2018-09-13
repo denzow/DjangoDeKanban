@@ -11,7 +11,7 @@ const actions = {
     commit('setBoardList', { boardList });
   },
   async addBoard({ dispatch }, { boardName }) {
-    KanbanClient.addBoard({ boardName });
+    await KanbanClient.addBoard({ boardName });
     dispatch('fetchBoardList');
   },
 };

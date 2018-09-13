@@ -44,14 +44,7 @@ const getters = {
 };
 
 const actions = {
-  initBoard({ getters }, boardId) {
-    const socket = getters.getSocket;
-    socket.sendObj({
-      type: 'init_board',
-      boardId,
-    });
-  },
-  backToHome() {
+  backToHome() {  // call from consumer
     router.push('/');
   },
   broadcastBoardData({ getters }) {
