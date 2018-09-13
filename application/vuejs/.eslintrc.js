@@ -13,6 +13,7 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-shadow': ['error', { 'builtinGlobals': false, 'hoist': 'functions', 'allow': ['state', 'getters'] }],
     'arrow-parens': [2, "as-needed"],
+    'no-alert': 0,
     'no-param-reassign': [
       'error',
       {
