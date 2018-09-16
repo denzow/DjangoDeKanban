@@ -10,6 +10,7 @@ services:
     ports:
       - "3000:3000"
     environment:
+      - DJANGO_ENV=develop  # if you want to run daphne, set 'production'
       - REDIS_HOSTNAME=redis
       - REDIS_DB_NUMBER=0
       - REDIS_DB_PREFIX=local
