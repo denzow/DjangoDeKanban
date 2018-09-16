@@ -2,9 +2,6 @@ import Vue from 'vue';
 import store from '@/store';
 import VueNativeSock from 'vue-native-websocket';
 
-// mixed contentsを避けるため
-const WS_PROTOCOL = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-
 
 export default function WebSocketMiddleware(router) {
   // ダイナミックにwsをつなげる
@@ -20,7 +17,7 @@ export default function WebSocketMiddleware(router) {
 
     if (to.meta.ws) {
       console.log(to, `/ws${to.path}`);
-      Vue.use(VueNativeSock, `${WS_PROTOCOL}//${window.location.host}/ws${to.meta.ws(to)}`, {
+      Vue.use(VueNativeSock, `//${window.location.host}/ws${to.meta.ws(to)}`, {
         connectManually: true,
         reconnection: true,
         reconnectionAttempts: 5,
@@ -28,7 +25,6 @@ export default function WebSocketMiddleware(router) {
         format: 'json',
         store,
       });
-      console.log(Vue.prototype.$connect);
       Vue.prototype.$connect();
     }
     next();
