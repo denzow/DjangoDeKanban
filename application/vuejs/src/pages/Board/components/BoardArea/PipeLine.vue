@@ -22,8 +22,6 @@
       class="card-container"
       :options="options"
       v-model="wrappedCardList"
-      @start="startDragging"
-      @end="endDragging"
     >
       <Card v-for="card in wrappedCardList"
             class="item"
@@ -93,12 +91,6 @@ export default {
     },
   },
   methods: {
-    startDragging(e) {
-      console.log('startDragging', e);
-    },
-    endDragging(e) {
-      console.log('endDragging', e);
-    },
     addCardAction() {
       const cardTitle = window.prompt('CardTitle?');
       if (cardTitle) {
@@ -109,7 +101,7 @@ export default {
       }
     },
     delPipeLineAction() {
-      if (!window.confirm('Are you sure?')) return;
+      if (!window.confirm(`DELETE [${this.pipeLineName}] ? Are you sure?`)) return;
       this.deletePipeLine({
         boardId: this.getBoardId(),
         pipeLineId: this.pipeLine.pipeLineId,
@@ -149,6 +141,7 @@ export default {
   }
   .pipe-line-name {
     cursor: pointer;
+    font-size: 1rem;
   }
   .navbar {
     background-color: #6f7180;

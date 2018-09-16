@@ -2,7 +2,7 @@ from channels.generic.websocket import AsyncJsonWebsocketConsumer
 
 
 class ConsumerException(Exception):
-    pass
+    """consumer内での例外"""
 
 
 class BaseJsonConsumer(AsyncJsonWebsocketConsumer):
@@ -60,12 +60,18 @@ class BaseJsonConsumer(AsyncJsonWebsocketConsumer):
         await action(content)
 
     async def group_add(self, group_name, channel_name):
+        """
+        channel_layerと毎回書くのが面倒なので。。。
+        """
         await self.channel_layer.group_add(
             group_name,
             channel_name
         )
 
     async def group_send(self, group_name, body):
+        """
+        channel_layerと毎回書くのが面倒なので。。。
+        """
         await self.channel_layer.group_send(
             group_name,
             body
