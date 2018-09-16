@@ -25,3 +25,14 @@ How To Use
 
 access `http://localhost:3000`
 
+run daphne
+----------
+
+if you want to run daphne. set `$DJANGO_ENV`.
+
+```
+$ export DJANGO_ENV=production
+$ docker-compose up  -- run daphne
+```
+
+more information, see `docker/service/start-server.sh`.
