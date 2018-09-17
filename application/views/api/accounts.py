@@ -5,6 +5,9 @@ from .base import BaseApiView
 class AccountsApi(BaseApiView):
 
     def get(self, _):
+        """
+        認証済であればログイン情報を戻す
+        """
         account = self.login_member
         if account.is_authenticated:
             return JsonResponse({

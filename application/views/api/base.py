@@ -2,6 +2,9 @@ from django.views.generic import View
 
 
 class BaseApiView(View):
+    """
+    API系Viewの基底クラス
+    """
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

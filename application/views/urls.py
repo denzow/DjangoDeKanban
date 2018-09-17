@@ -9,7 +9,6 @@ from .accounts import signup as signup_view
 from .api.urls import urlpatterns as api_urls
 
 urlpatterns = [
-    #path('accounts/logout/', signup_view.LogOutView.as_view(), name='logout'),
     path('accounts/signup/', signup_view.SignUpView.as_view(), name='signup'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('api/', include(api_urls)),
