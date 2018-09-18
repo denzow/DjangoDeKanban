@@ -8,4 +8,4 @@ WORKDIR /app
 RUN pip install -v pip-tools==1.9.0
 
 ADD ./requirements.txt requirements.txt
-RUN pip-sync /app/requirements.txt
+RUN pip install -r /app/requirements.txt
