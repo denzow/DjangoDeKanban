@@ -25,6 +25,37 @@ How To Use
 
 access `http://localhost:3000`
 
+#### create account
+
+![](./docs/SIGNUP.png)
+
+#### login
+
+![](./docs/LOGIN.png)
+
+
+#### create board
+
+![](./docs/addboard.gif)
+
+
+#### create list
+
+
+![](./docs/addlist.gif)
+
+
+#### add card
+
+
+![](./docs/addcard.gif)
+
+#### move
+
+
+![](./docs/movecard.gif)
+
+
 run daphne
 ----------
 
