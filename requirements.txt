@@ -25,5 +25,5 @@ requests-oauthlib==1.0.0
 six==1.11.0
 Twisted==18.7.0
 txaio==18.7.1
-urllib3==1.23
+urllib3==1.26.5
 zope.interface==4.5.0
